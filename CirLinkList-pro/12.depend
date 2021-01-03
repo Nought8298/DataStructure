@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1603603892 source:c:\users\yinlu\desktop\12\main.c
+	<stdio.h>
+	<stdlib.h>
+	<malloc.h>
+
