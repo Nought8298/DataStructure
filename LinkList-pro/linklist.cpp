@@ -33,6 +33,55 @@ Status CreateList_Linklist(Linklist &L){
     return OK;
 }
 
+//非随机存取
+Status GetElem_LinkList(Linklist L,int i,ElemType &e){
+    //L为带头结点的头指针
+    Linklist p = L->next;
+    int j = 1;
+    while(p&&j<i){
+        p = p->next;
+        ++j;
+    }
+    if(!p||j>i)
+        return ERROR;
+    e = p->data;
+    return OK;
+}
+
+//第i个位置前插入结点
+Status ListInsert(Linklist &L,int i,ElemType e){
+    Linklist p = L;
+    int j = 1;
+    while(p&&j<i){      //寻找第i-1个结点
+        p = p->next;
+        ++j;
+    }
+    if(!p||j>i)
+        return ERROR;
+    Linklist q = (LNode *)malloc(sizeof(LNode));
+    q->data = e;
+    q->next = p->next;
+    p->next = q;
+    return OK;
+}
+
+//删除第i个元素
+Status ListDelete(Linklist &L,int i,ElemType &e){
+    Linklist p = L;
+    int j = 1;
+    while(p&&j<i){      //寻找第i-1个结点
+        p = p->next;
+        ++j;
+    }
+    if(!p||j>i)
+        return ERROR;
+    Linklist q = p->next;
+    e = q->data;
+    p->next = q->next;
+    free(q);
+    return OK;
+}
+
 //就地逆置
 Status Reverse_Linklist(Linklist &L){
     Linklist p = L->next;
@@ -60,6 +109,10 @@ int main(){
     CreateList_Linklist(L);
     showList_LinkList(L);
     Reverse_Linklist(L);
+    ElemType e;
+    ListDelete(L,1,e);
+    showList_LinkList(L);
+    ListInsert(L,2,e);
     showList_LinkList(L);
     system("pause");
     return 0;
